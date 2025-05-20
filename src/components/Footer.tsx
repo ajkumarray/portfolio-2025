@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 
 export default function Footer() {
@@ -104,23 +103,16 @@ export default function Footer() {
             </Button>
           </div>
           
-          <div className="border-t border-border w-full pt-8 flex flex-col items-center">
-            <p className="text-sm text-muted-foreground mb-4">
-              Building great software with passion and precision.
-            </p>
-            
-            <div className="flex gap-4 mb-4">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
-              </a>
+          <div className="border-t border-border w-full pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-sm text-muted-foreground mb-4 md:mb-0">
+                Building great software with passion and precision.
+              </p>
+              
+              <p className="text-sm text-muted-foreground">
+                &copy; {year} John Developer. All rights reserved.
+              </p>
             </div>
-            
-            <p className="text-sm text-muted-foreground">
-              &copy; {year} John Developer. All rights reserved.
-            </p>
           </div>
         </div>
       </div>
