@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import FloatingNavBar from "@/components/FloatingNavBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -39,6 +40,7 @@ const Index = () => {
     <ThemeProvider>
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
+        <FloatingNavBar />
         <main>
           <Hero />
           <Skills />
