@@ -1,16 +1,18 @@
 
 import { useState, useEffect } from "react";
+import { Home, Code2, FolderKanban, MailPlus } from "lucide-react";
 
 type NavItem = {
-  label: string;
+  icon: JSX.Element;
   href: string;
+  label: string; // Keep for accessibility
 };
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { icon: <Home className="h-5 w-5" />, href: "#home", label: "Home" },
+  { icon: <Code2 className="h-5 w-5" />, href: "#skills", label: "Skills" },
+  { icon: <FolderKanban className="h-5 w-5" />, href: "#projects", label: "Projects" },
+  { icon: <MailPlus className="h-5 w-5" />, href: "#contact", label: "Contact" },
 ];
 
 export default function FloatingNavBar() {
@@ -45,20 +47,35 @@ export default function FloatingNavBar() {
 
   return (
     <div className="fixed bottom-[50px] left-1/2 transform -translate-x-1/2 z-50 py-3 px-5 rounded-full bg-background/80 backdrop-blur-md shadow-lg border border-border animate-fade-in">
-      <div className="flex items-center space-x-2">
-        {navItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-300 ${
-              activeSection === item.href 
-                ? "bg-primary/10 text-primary shadow-inner transform scale-95" 
-                : "hover:bg-muted"
-            }`}
-          >
-            {item.label}
-          </a>
-        ))}
+      <div className="flex items-center space-x-4">
+        {navItems.map((item) => {
+          const isActive = activeSection === item.href;
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              aria-label={item.label}
+              className={`relative p-3 rounded-full transition-all duration-300 ${
+                isActive 
+                  ? "bg-primary/10 text-primary shadow-inner transform scale-95" 
+                  : "hover:bg-muted text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <div 
+                className={`transition-all duration-300 ${
+                  isActive 
+                    ? "transform scale-110" 
+                    : ""
+                }`}
+              >
+                {item.icon}
+              </div>
+              {isActive && (
+                <div className="absolute inset-0 rounded-full bg-primary/5 -z-10 shadow-[inset_0_1px_4px_rgba(0,0,0,0.2)]"></div>
+              )}
+            </a>
+          );
+        })}
       </div>
     </div>
   );
