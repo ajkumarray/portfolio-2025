@@ -1,7 +1,10 @@
+
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const isMobile = useIsMobile();
   
   return (
     <footer className="bg-muted py-12">
@@ -104,12 +107,12 @@ export default function Footer() {
           </div>
           
           <div className="border-t border-border w-full pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm text-muted-foreground mb-4 md:mb-0">
+            <div className={`flex ${isMobile ? 'flex-col items-center' : 'flex-row justify-between items-center'}`}>
+              <p className="text-sm text-muted-foreground mb-4 md:mb-0 text-center">
                 Building great software with passion and precision.
               </p>
               
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground text-center">
                 &copy; {year} John Developer. All rights reserved.
               </p>
             </div>
