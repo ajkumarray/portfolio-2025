@@ -1,18 +1,20 @@
 
 import { useState, useEffect } from "react";
-import { Home, Code2, FolderKanban, MailPlus } from "lucide-react";
+import { Home, Info, Briefcase, Settings, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type NavItem = {
   icon: JSX.Element;
   href: string;
-  label: string; // Keep for accessibility
+  label: string;
 };
 
 const navItems: NavItem[] = [
   { icon: <Home className="h-5 w-5" />, href: "#home", label: "Home" },
-  { icon: <Code2 className="h-5 w-5" />, href: "#skills", label: "Skills" },
-  { icon: <FolderKanban className="h-5 w-5" />, href: "#projects", label: "Projects" },
-  { icon: <MailPlus className="h-5 w-5" />, href: "#contact", label: "Contact" },
+  { icon: <Info className="h-5 w-5" />, href: "#skills", label: "Skills" },
+  { icon: <Briefcase className="h-5 w-5" />, href: "#projects", label: "Projects" },
+  { icon: <Settings className="h-5 w-5" />, href: "#services", label: "Services" },
+  { icon: <Mail className="h-5 w-5" />, href: "#contact", label: "Contact" },
 ];
 
 export default function FloatingNavBar() {
@@ -46,8 +48,8 @@ export default function FloatingNavBar() {
   }, []);
 
   return (
-    <div className="fixed bottom-[50px] left-1/2 transform -translate-x-1/2 z-50 py-3 px-5 rounded-full bg-background/80 backdrop-blur-md shadow-lg border border-border animate-fade-in">
-      <div className="flex items-center space-x-4">
+    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 py-2 px-4 rounded-full bg-background/80 dark:bg-muted/95 backdrop-blur-md shadow-lg border border-border animate-fade-in">
+      <div className="flex items-center space-x-6">
         {navItems.map((item) => {
           const isActive = activeSection === item.href;
           return (
@@ -55,24 +57,38 @@ export default function FloatingNavBar() {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className={`relative p-3 rounded-full transition-all duration-300 ${
-                isActive 
-                  ? "bg-primary/10 text-primary shadow-inner transform scale-95" 
-                  : "hover:bg-muted text-muted-foreground hover:text-foreground"
-              }`}
+              className="group relative flex flex-col items-center"
             >
               <div 
-                className={`transition-all duration-300 ${
+                className={cn(
+                  "relative p-3 rounded-full transition-all duration-300",
                   isActive 
-                    ? "transform scale-110" 
-                    : ""
-                }`}
+                    ? "bg-primary text-primary-foreground dark:text-black -translate-y-3 shadow-md" 
+                    : "text-muted-foreground hover:text-foreground"
+                )}
               >
-                {item.icon}
+                <div className={cn(
+                  "transition-all duration-300",
+                  isActive ? "transform scale-110" : ""
+                )}>
+                  {item.icon}
+                </div>
+                
+                {/* Crater effect for active item */}
+                {isActive && (
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-10 h-6 bg-background/80 dark:bg-muted/95 rounded-t-full z-[-1]"></div>
+                )}
               </div>
-              {isActive && (
-                <div className="absolute inset-0 rounded-full bg-primary/5 -z-10 shadow-[inset_0_1px_4px_rgba(0,0,0,0.2)]"></div>
-              )}
+              
+              {/* Label under each icon */}
+              <span className={cn(
+                "text-xs mt-1 transition-all duration-300",
+                isActive 
+                  ? "text-primary font-medium" 
+                  : "text-muted-foreground group-hover:text-foreground"
+              )}>
+                {item.label}
+              </span>
             </a>
           );
         })}
