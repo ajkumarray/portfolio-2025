@@ -55,23 +55,35 @@ export default function FloatingNavBar() {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className={`relative p-3 rounded-full transition-all duration-300 ${
+              className={`relative p-3 rounded-full transition-all duration-500 ${
                 isActive 
-                  ? "bg-primary/10 text-primary shadow-inner transform scale-95" 
-                  : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                  ? "text-primary" 
+                  : "hover:bg-muted/70 text-muted-foreground hover:text-foreground"
               }`}
             >
+              {/* Active icon floating above the crater */}
               <div 
-                className={`transition-all duration-300 ${
+                className={`relative z-20 transition-all duration-500 ${
                   isActive 
-                    ? "transform scale-110" 
+                    ? "transform -translate-y-2 scale-110" 
                     : ""
                 }`}
               >
                 {item.icon}
               </div>
+              
+              {/* Crater effect */}
               {isActive && (
-                <div className="absolute inset-0 rounded-full bg-primary/5 -z-10 shadow-[inset_0_1px_4px_rgba(0,0,0,0.2)]"></div>
+                <>
+                  {/* The crater hole in navbar */}
+                  <div className="absolute inset-0 rounded-full bg-background/90 shadow-[inset_0_2px_8px_rgba(0,0,0,0.25)] -z-10"></div>
+                  
+                  {/* The floating circle around active icon */}
+                  <div className="absolute inset-0 rounded-full bg-primary/5 transform -translate-y-2 scale-110 z-10 shadow-[0_4px_8px_rgba(0,0,0,0.1)]"></div>
+                  
+                  {/* Subtle glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-primary/5 blur-sm transform -translate-y-2 scale-125 -z-5 opacity-50"></div>
+                </>
               )}
             </a>
           );
