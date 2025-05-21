@@ -42,32 +42,10 @@ const Index = () => {
         <Navbar />
         <FloatingNavBar />
         <main>
-          <section id="home">
-            <Hero />
-          </section>
-          <section id="about">
-            {/* Placeholder for About section */}
-            <div className="container mx-auto py-20">
-              <h2 className="text-3xl font-bold heading-gradient mb-6">About Me</h2>
-              <p className="text-muted-foreground mb-4">This is the About section</p>
-            </div>
-          </section>
-          <section id="portfolio">
-            <Projects />
-          </section>
-          <section id="skills">
-            <Skills />
-          </section>
-          <section id="services">
-            {/* Placeholder for Services section */}
-            <div className="container mx-auto py-20">
-              <h2 className="text-3xl font-bold heading-gradient mb-6">Services</h2>
-              <p className="text-muted-foreground mb-4">This is the Services section</p>
-            </div>
-          </section>
-          <section id="contact">
-            <Contact />
-          </section>
+          <Hero />
+          <Skills />
+          <Projects />
+          <Contact />
         </main>
         <Footer />
       </div>

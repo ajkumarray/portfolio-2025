@@ -1,23 +1,22 @@
 
 import { useState, useEffect } from "react";
-import { Home, User, Briefcase, Wrench, MailPlus } from "lucide-react";
+import { Home, Code2, FolderKanban, MailPlus } from "lucide-react";
 
 type NavItem = {
   icon: JSX.Element;
   href: string;
-  label: string;
+  label: string; // Keep for accessibility
 };
 
 const navItems: NavItem[] = [
   { icon: <Home className="h-5 w-5" />, href: "#home", label: "Home" },
-  { icon: <User className="h-5 w-5" />, href: "#about", label: "About" },
-  { icon: <Briefcase className="h-5 w-5" />, href: "#portfolio", label: "Portfolio" },
-  { icon: <Wrench className="h-5 w-5" />, href: "#services", label: "Services" },
+  { icon: <Code2 className="h-5 w-5" />, href: "#skills", label: "Skills" },
+  { icon: <FolderKanban className="h-5 w-5" />, href: "#projects", label: "Projects" },
   { icon: <MailPlus className="h-5 w-5" />, href: "#contact", label: "Contact" },
 ];
 
 export default function FloatingNavBar() {
-  const [activeSection, setActiveSection] = useState<string>("#about"); // Default to About
+  const [activeSection, setActiveSection] = useState<string>("#home");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +46,8 @@ export default function FloatingNavBar() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 py-3 px-5 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg border border-gray-200 dark:border-gray-800 animate-fade-in">
-      <div className="flex items-center justify-between space-x-2 md:space-x-4">
+    <div className="fixed bottom-[50px] left-1/2 transform -translate-x-1/2 z-50 py-3 px-5 rounded-full bg-background/80 backdrop-blur-md shadow-lg border border-border animate-fade-in">
+      <div className="flex items-center space-x-4">
         {navItems.map((item) => {
           const isActive = activeSection === item.href;
           return (
@@ -56,36 +55,35 @@ export default function FloatingNavBar() {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className="relative px-3 py-2 group"
+              className={`relative p-3 rounded-full transition-all duration-500 ${
+                isActive 
+                  ? "text-primary" 
+                  : "hover:bg-muted/70 text-muted-foreground hover:text-foreground"
+              }`}
             >
-              {/* The elevated active icon */}
+              {/* Active icon floating above the crater */}
               <div 
-                className={`relative flex flex-col items-center justify-center rounded-full transition-all duration-300 ${
+                className={`relative z-20 transition-all duration-500 ${
                   isActive 
-                    ? "p-2 bg-green-500 text-white -translate-y-5 shadow-[0_4px_12px_rgba(34,197,94,0.4)] z-20" 
-                    : "p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 z-10"
+                    ? "transform -translate-y-2 scale-110" 
+                    : ""
                 }`}
               >
                 {item.icon}
-                
-                {/* Show label for all items, but style differently for active */}
-                <span className={`text-[10px] whitespace-nowrap font-medium mt-1 ${
-                  isActive 
-                    ? "text-gray-700 dark:text-gray-300" 
-                    : "text-gray-600 dark:text-gray-400"
-                }`}>
-                  {item.label}
-                </span>
               </div>
               
-              {/* Crater effect in the navbar */}
+              {/* Crater effect */}
               {isActive && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-4 bg-white/90 dark:bg-gray-900/90 rounded-b-xl z-0"></div>
-              )}
-              
-              {/* Hover effect for inactive items */}
-              {!isActive && (
-                <div className="absolute inset-0 rounded-full bg-gray-100/0 dark:bg-gray-800/0 transition-all duration-300 group-hover:bg-gray-100/70 dark:group-hover:bg-gray-800/40 z-0"></div>
+                <>
+                  {/* The crater hole in navbar */}
+                  <div className="absolute inset-0 rounded-full bg-background/90 shadow-[inset_0_2px_8px_rgba(0,0,0,0.25)] -z-10"></div>
+                  
+                  {/* The floating circle around active icon */}
+                  <div className="absolute inset-0 rounded-full bg-primary/5 transform -translate-y-2 scale-110 z-10 shadow-[0_4px_8px_rgba(0,0,0,0.1)]"></div>
+                  
+                  {/* Subtle glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-primary/5 blur-sm transform -translate-y-2 scale-125 -z-5 opacity-50"></div>
+                </>
               )}
             </a>
           );
