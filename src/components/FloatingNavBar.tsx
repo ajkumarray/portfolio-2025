@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Home, Code2, FolderKanban, MailPlus } from "lucide-react";
 
@@ -55,35 +54,34 @@ export default function FloatingNavBar() {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className={`relative p-3 rounded-full transition-all duration-500 ${
-                isActive 
-                  ? "text-primary" 
-                  : "hover:bg-muted/70 text-muted-foreground hover:text-foreground"
-              }`}
+              className="relative px-3 py-3 group"
             >
-              {/* Active icon floating above the crater */}
+              {/* The elevated active icon */}
               <div 
-                className={`relative z-20 transition-all duration-500 ${
+                className={`relative flex items-center justify-center rounded-full p-2 transition-all duration-500 ${
                   isActive 
-                    ? "transform -translate-y-2 scale-110" 
-                    : ""
+                    ? "bg-primary text-background -translate-y-4 scale-110 z-20 shadow-[0_4px_12px_rgba(0,0,0,0.15)]" 
+                    : "text-muted-foreground hover:text-foreground z-10"
                 }`}
               >
                 {item.icon}
+                
+                {/* Show label for active item */}
+                {isActive && (
+                  <span className="absolute text-[10px] whitespace-nowrap font-medium top-[calc(100%+2px)] left-1/2 transform -translate-x-1/2 opacity-80">
+                    {item.label}
+                  </span>
+                )}
               </div>
               
-              {/* Crater effect */}
+              {/* Crater effect in the navbar */}
               {isActive && (
-                <>
-                  {/* The crater hole in navbar */}
-                  <div className="absolute inset-0 rounded-full bg-background/90 shadow-[inset_0_2px_8px_rgba(0,0,0,0.25)] -z-10"></div>
-                  
-                  {/* The floating circle around active icon */}
-                  <div className="absolute inset-0 rounded-full bg-primary/5 transform -translate-y-2 scale-110 z-10 shadow-[0_4px_8px_rgba(0,0,0,0.1)]"></div>
-                  
-                  {/* Subtle glow effect */}
-                  <div className="absolute inset-0 rounded-full bg-primary/5 blur-sm transform -translate-y-2 scale-125 -z-5 opacity-50"></div>
-                </>
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-9 h-3 bg-background/80 rounded-b-xl z-0"></div>
+              )}
+              
+              {/* Hover effect for inactive items */}
+              {!isActive && (
+                <div className="absolute inset-0 rounded-full bg-muted/0 transition-all duration-300 group-hover:bg-muted/50 z-0"></div>
               )}
             </a>
           );
